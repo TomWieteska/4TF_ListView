@@ -1,0 +1,59 @@
+package com.example.teoria_4tf;
+
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+public class MainActivity extends AppCompatActivity {
+    private static final String[] elementy =
+            {
+            "Element1","Element2","Element2","Element4","Element5"
+            };
+    ArrayAdapter<String> adapter;
+
+    private ListView listaElementow;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_main);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+
+            listaElementow = findViewById(R.id.listaNapisow);
+            adapter = new ArrayAdapter<String>(this, R.layout.my_item,elementy);
+            listaElementow.setAdapter(adapter);
+            listaElementow.setSelection(0);
+
+            listaElementow.setOnItemClickListener(
+                    new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                           TextView element = (TextView) view;
+                           TextView selit = (TextView) listaElementow.getSelectedItem();
+                           selit.setBackgroundColor(Color.parseColor("#ffffff"));
+                           element.setBackgroundColor(Color.parseColor("#00FF00"));
+                           listaElementow.setSelection(position);
+                        }
+                    }
+            );
+            return insets;
+        });
+
+
+    }
+}
