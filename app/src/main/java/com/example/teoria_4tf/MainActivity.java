@@ -1,8 +1,6 @@
 package com.example.teoria_4tf;
 
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,14 +15,18 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class MainActivity extends AppCompatActivity {
     private static final String[] elementy =
             {
             "Element1","Element2","Element2","Element4","Element5"
             };
-    ArrayAdapter<String> adapter;
-
-    private ListView listaElementow;
+    private ArrayAdapter<String> adapter;
+    private ArrayList<String> elementyList;
+    private ListView lvElementy;
+    private int index = -1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,27 +35,30 @@ public class MainActivity extends AppCompatActivity {
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-
-            listaElementow = findViewById(R.id.listaNapisow);
-            adapter = new ArrayAdapter<String>(this, R.layout.my_item,elementy);
-            listaElementow.setAdapter(adapter);
-            listaElementow.setSelection(0);
-
-            listaElementow.setOnItemClickListener(
-                    new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                           TextView element = (TextView) view;
-                           TextView selit = (TextView) listaElementow.getSelectedItem();
-                           selit.setBackgroundColor(Color.parseColor("#ffffff"));
-                           element.setBackgroundColor(Color.parseColor("#00FF00"));
-                           listaElementow.setSelection(position);
-                        }
-                    }
-            );
             return insets;
         });
+        lvElementy = findViewById(R.id.listaNapisow);
+        lvElementy.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        elementyList = new ArrayList<String>();
+        elementyList.addAll(Arrays.asList(elementy));
+        adapter = new ArrayAdapter<String>(this, R.layout.my_item,elementy);
+        lvElementy.setAdapter(adapter);
 
+        lvElementy.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                if(index>=0)
+                    lvElementy.getChildAt(index).setBackgroundColor(Color.parseColor("white"));
+
+                view.setBackgroundColor(Color.parseColor("#00ff00"));
+                index = position;
+
+
+
+
+            }
+        });
 
     }
 }
