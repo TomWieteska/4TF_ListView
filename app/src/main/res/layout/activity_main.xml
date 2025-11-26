@@ -7,9 +7,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
-    <ListView
-        android:id="@+id/listaNapisow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+            <ListView
+                android:id="@+id/listaNapisow"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"/>
+            <EditText
+                android:id="@+id/etNewElement"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Dodaj nowy element"
+                android:layout_gravity="bottom"/>
+            <Button
+                android:id="@+id/btnAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dodaj"
+                android:layout_gravity="bottom"/>
+
+
 
 </LinearLayout>
